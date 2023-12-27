@@ -1,7 +1,39 @@
 version: "3"
 services:
-  employeemongodb:
+  todo-db:
     image: mongo:latest
-    container_name: "mongodb"
+    container_name: "todo-db"
     ports:
-      - 27017:27017
+      - "27017:27017"
+    networks:
+      - todo-app-network
+  todo-api:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    container_name: "todo-api"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - todo-db
+    links:
+      - todo-db
+    networks:
+      - todo-app-network
+  todo-app:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: "todo-app"
+    ports:
+      - "8000:3000"
+    depends_on:
+      - todo-api
+    links:
+      - todo-api
+    networks:
+      - todo-app-network
+
+networks:
+  todo-app-network:
+    driver: bridge
