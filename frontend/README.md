@@ -1,5 +1,6 @@
-# TODO List App
-
+# TODO App
+This application is built using ReactJS. It is a single page application (SPA) that is used to display all the tasks. 
+It also provides the functionality to add, delete and mark a task as done.
 
 ## Available Scripts
 
